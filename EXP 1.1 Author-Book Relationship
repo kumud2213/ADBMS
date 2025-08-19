@@ -1,0 +1,24 @@
+CREATE TABLE Authors (     
+    author_id INT PRIMARY KEY,     
+    name VARCHAR(50) ,    
+    country VARCHAR(50));      
+
+CREATE TABLE Books (     
+    book_id INT PRIMARY KEY,     
+    title VARCHAR(100),     
+    author_id INT ,     
+    FOREIGN KEY (author_id) REFERENCES Authors(author_id) ON DELETE CASCADE);
+
+DESCRIBE Authors;
+DESCRIBE Books;
+
+
+INSERT INTO Authors (author_id, name, country) VALUES(1, 'William Shakespeare', 'England'),(2, 'Rabindranath Tagore', 'India'),(3, 'Ruskin Bond', 'India');
+INSERT INTO Books (book_id, title, author_id) VALUES(101, 'Romeo and Juliet', 1),(102, 'Gitanjali', 2),(103, 'The Room on the Roof', 3);
+SELECT * FROM Authors;SELECT * FROM Books;
+
+
+
+SELECT Books.title, Authors.name, Authors.country
+FROM  Books 
+INNER JOIN  Authors ON Books.author_id = Authors.author_id;
