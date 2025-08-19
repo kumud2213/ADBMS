@@ -1,0 +1,58 @@
+
+CREATE TABLE Students (    
+    student_id INT PRIMARY KEY,    
+    name VARCHAR(100),    
+    dob DATE    );
+CREATE TABLE Courses (    
+    course_id INT PRIMARY KEY,    
+    title VARCHAR(100)    );                    
+CREATE TABLE Enrollments (    
+    enroll_id INT PRIMARY KEY,    
+    student_id INT,    
+    course_id INT,    
+    grade VARCHAR(2),    
+    FOREIGN KEY (student_id) REFERENCES Students(student_id),    
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id)    );
+DESC Students;
+DESC Courses;
+DESC Enrollments;
+
+INSERT INTO Students (student_id,name,dob)
+VALUES
+(1,'Ashish','2002-03-14'),
+(2,'Smaran','2001-08-22'),
+(3,'Vaibhav','2003-01-05');
+
+INSERT INTO Courses (course_id, title)
+VALUES
+(101,'DBMS'),
+(102,'Operating Systems'),
+(103,'Computer Networks');
+
+INSERT INTO Enrollments (enroll_id, student_id, course_id, grade)
+VALUES
+(1,1,101,'A'),
+(2,1,102,'B+');
+SELECT * FROM Students;
+SELECT * FROM Courses;
+SELECT * FROM Enrollments;
+
+BEGIN;
+INSERT INTO Enrollments (enroll_id, student_id, course_id, grade)
+VALUES (3, 1, 103, 'A');
+COMMIT;
+SELECT * FROM Enrollments; 
+
+BEGIN;
+SAVEPOINT before_second_enrollment;
+SELECT * FROM Enrollments; 
+
+INSERT INTO Enrollments(enroll_id, student_id, course_id, grade)
+VALUES(3,1,103,'A');
+SELECT    
+    s.name AS student_name;    
+    c.title AS course_title;    
+    e.grade
+FROM Enrollments e
+JOIN Students s ON e.student_id = s.student_id
+JOIN Courses c ON e.course_id = c.course_id;
